@@ -1,0 +1,17 @@
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\bin\Debug\net6.0-windows\Dice.exe
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\bin\Debug\net6.0-windows\Dice.deps.json
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\bin\Debug\net6.0-windows\Dice.runtimeconfig.json
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\bin\Debug\net6.0-windows\Dice.dll
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\bin\Debug\net6.0-windows\Dice.pdb
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.csproj.AssemblyReference.cache
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.csproj.GenerateResource.cache
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.AssemblyInfoInputs.cache
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.AssemblyInfo.cs
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.csproj.CoreCompileInputs.cache
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.dll
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\refint\Dice.dll
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.pdb
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.genruntimeconfig.cache
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\ref\Dice.dll
+C:\Users\Andy Fairclough\source\repos\Dice\Dice\obj\Debug\net6.0-windows\Dice.Form.resources
