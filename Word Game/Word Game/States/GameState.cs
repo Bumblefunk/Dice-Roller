@@ -17,6 +17,9 @@ namespace Word_Game.States
         private SpriteFont _font;
         private string toUpdate, targetWord;
         private float spawn = 0;
+        private float timer = 0;
+        private int score = 0;
+        private int totalspawn = 1;
         private Texture2D shipTexture;
         private Vector2 shipPosition;
         KeyboardState newKey, oldKey;
@@ -26,7 +29,7 @@ namespace Word_Game.States
         public static int screenWidth = 600;
         public static int screenHeight = 720;
 
-        public static List<string> targetList1 = new List<string>() { "Hello World", "Hi World", "Sup Earth", "Howdy Dirt", "Greetings Earthling"};
+        public static List<string> targetList1 = new List<string>() { "Hello World", "Hi Orb", "Sup Earth", "Howdy Dirt", "Greetings Earthling"};
         public static List<string> targetList2 = new List<string>() { "Hello", "Hi", "Sup", "Howdy", "Meowdy" };
         public static List<string> targetList = new List<string>();
 
@@ -87,6 +90,7 @@ namespace Word_Game.States
                 foreach (Sprites.Enemies enemy in query)
                 {
                     enemy.isVisable = false;
+                    score += enemy.target.Length;
                 }
                 _Textbox.Clear();
             }
@@ -99,6 +103,8 @@ namespace Word_Game.States
             oldKey = newKey;
 
             spawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
 
             foreach (Sprites.Enemies enemy in enemy)
                 enemy.Update(_graphicsDevice);
@@ -115,10 +121,16 @@ namespace Word_Game.States
             int positionBuffer = Convert.ToInt32(_font.MeasureString(targetWord).X);
             int positionX = random.Next(0 + positionBuffer, 600 - positionBuffer);
 
+            if (timer >= 60)
+            {
+                timer = 0;
+                totalspawn++;
+            }
+
             if (spawn >= 1)
             {
                 spawn = 0;
-                if (enemy.Count < 4)
+                if (enemy.Count < totalspawn)
                     enemy.Add(new Sprites.Enemies(_font, new Vector2(positionX, 1), targetWord));
             }
 
@@ -150,6 +162,7 @@ namespace Word_Game.States
             foreach (Sprites.Enemies enemy in enemy)
                 enemy.Draw(spriteBatch);
             spriteBatch.DrawString(_font, _Textbox, new Vector2(0, screenHeight - shipTexture.Height), Color.Red);
+            spriteBatch.DrawString(_font, score.ToString(), new Vector2(0, screenHeight - (shipTexture.Height/2)), Color.Purple);
             spriteBatch.End();
         }
     }

@@ -35,15 +35,15 @@ namespace Word_Game.States
 
             var exitButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 350),
+                Position = new Vector2(300, 450),
                 Text = "Exit"
             };
             exitButton.Click += Button_Exit_Clicked;
 
             var difficultyButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 450),
-                Text = "Easier"
+                Position = new Vector2(300, 350),
+                Text = "Easy Mode"
             };
             difficultyButton.Click += Button_Difficulty_Clicked;
 
@@ -62,15 +62,15 @@ namespace Word_Game.States
             GameState.targetList = GameState.targetList1;
         }
 
-        private void Button_Exit_Clicked(object sender, EventArgs args)
-        {
-            _game.Exit();
-        }
-
         private void Button_Difficulty_Clicked(object sender, EventArgs args)
         {
             _game.ChangeState(new GameState(_game, _graphicsDevice, _content));
             GameState.targetList = GameState.targetList2;
+        }
+
+        private void Button_Exit_Clicked(object sender, EventArgs args)
+        {
+            _game.Exit();
         }
 
         public override void Update(GameTime gameTime)
