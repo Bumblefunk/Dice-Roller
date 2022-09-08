@@ -26,11 +26,13 @@ namespace Word_Game.States
         Scrolling scrolling1;
         Scrolling scrolling2;
 
+        public static string currentString = "";
         public static int screenWidth = 600;
         public static int screenHeight = 720;
+        public int healthCount = 3;
 
         public static List<string> targetList1 = new List<string>() { "Hello World", "Hi Orb", "Sup Earth", "Howdy Dirt", "Greetings Earthling"};
-        public static List<string> targetList2 = new List<string>() { "Hello", "Hi", "Sup", "Howdy", "Meowdy" };
+        public static List<string> targetList2 = new List<string>() { "Hello", "Hi", "Sup", "Howdy", "Meowdy", "HiHi"};
         public static List<string> targetList = new List<string>();
 
         List<Sprites.Enemies> enemy = new List<Sprites.Enemies>();
@@ -66,7 +68,11 @@ namespace Word_Game.States
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
 
+            if (healthCount == 0)
+                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+
             if (scrolling1.rectangle.Y - scrolling1.texture.Height >= -200)
+
                 scrolling1.rectangle.Y = scrolling2.rectangle.Y - scrolling2.texture.Height;
             if (scrolling2.rectangle.Y - scrolling2.texture.Height >= -200)
                 scrolling2.rectangle.Y = scrolling1.rectangle.Y - scrolling1.texture.Height;
@@ -80,15 +86,17 @@ namespace Word_Game.States
             {
                 _Textbox.Length--;
                 toUpdate = null;
+                currentString = _Textbox.ToString();
             }
 
 
             if (newKey.IsKeyDown(Keys.Enter) && oldKey.IsKeyUp(Keys.Enter))
             {
-                IEnumerable<Sprites.Enemies> query = enemy.Where(enemy => enemy.target == _Textbox.ToString());
+                IEnumerable<Sprites.Enemies> match = enemy.Where(enemy => enemy.target.Equals(_Textbox.ToString(), StringComparison.OrdinalIgnoreCase));
 
-                foreach (Sprites.Enemies enemy in query)
+                foreach (Sprites.Enemies enemy in match)
                 {
+                    enemy.isShot = true;
                     enemy.isVisable = false;
                     score += enemy.target.Length;
                 }
@@ -99,15 +107,16 @@ namespace Word_Game.States
             {
                 _Textbox.Append(toUpdate);
                 toUpdate = null;
-            }
+                currentString = _Textbox.ToString();
+    }
             oldKey = newKey;
 
             spawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-
             foreach (Sprites.Enemies enemy in enemy)
                 enemy.Update(_graphicsDevice);
+
             LoadEnemies();
             PostUpdate(gameTime);
             //update scores here - maybe the enemies too - backgrounds ect
@@ -133,6 +142,11 @@ namespace Word_Game.States
                 if (enemy.Count < totalspawn)
                     enemy.Add(new Sprites.Enemies(_font, new Vector2(positionX, 1), targetWord));
             }
+
+            IEnumerable<Sprites.Enemies> attacked = enemy.Where(enemy => !enemy.isShot && !enemy.isVisable);
+
+            foreach (Sprites.Enemies enemy in attacked)
+                healthCount--;
 
             enemy.RemoveAll(enemy => !enemy.isVisable);
         }
