@@ -14,7 +14,6 @@ namespace Word_Game.Sprites
     {
         public Texture2D texture;
         public Vector2 position;
-        public string toUpdate;
 
         public Ship(Texture2D newTexture, Vector2 newPosition)
         {

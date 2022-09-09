@@ -46,6 +46,7 @@ namespace Word_Game.Sprites
                 velocity.X = -velocity.X;
 
             int index = target.Length - GameState.currentString.Length;
+
             if (target.Contains(GameState.currentString, StringComparison.OrdinalIgnoreCase))
             {
                 onTarget = target.Remove(GameState.currentString.Length, index);

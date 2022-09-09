@@ -35,10 +35,17 @@ namespace Word_Game.States
 
             var exitButton = new Button(buttonTexture, buttonFont)
             {
-                Position = new Vector2(300, 450),
+                Position = new Vector2(300, 550),
                 Text = "Exit"
             };
             exitButton.Click += Button_Exit_Clicked;
+
+            var scoresButton = new Button(buttonTexture, buttonFont)
+            {
+                Position = new Vector2(300, 450),
+                Text = "HighScores"
+            };
+            scoresButton.Click += Button_Scores_Clicked;
 
             var difficultyButton = new Button(buttonTexture, buttonFont)
             {
@@ -47,7 +54,7 @@ namespace Word_Game.States
             };
             difficultyButton.Click += Button_Difficulty_Clicked;
 
-            _components = new List<Component>() { playButton, exitButton, difficultyButton};
+            _components = new List<Component>() { playButton, exitButton, difficultyButton, scoresButton};
         }
 
         public override void LoadContent()
@@ -71,6 +78,11 @@ namespace Word_Game.States
         private void Button_Exit_Clicked(object sender, EventArgs args)
         {
             _game.Exit();
+        }
+
+        private void Button_Scores_Clicked(object sender, EventArgs args)
+        {
+            _game.ChangeState(new HighScoreBoard(_game, _graphicsDevice, _content));
         }
 
         public override void Update(GameTime gameTime)

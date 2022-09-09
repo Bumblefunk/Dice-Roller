@@ -21,6 +21,7 @@ namespace Word_Game.States
         private int score = 0;
         private int totalspawn = 1;
         private Texture2D shipTexture;
+        private Texture2D healthBox;
         private Vector2 shipPosition;
         KeyboardState newKey, oldKey;
         Scrolling scrolling1;
@@ -46,10 +47,7 @@ namespace Word_Game.States
             random = new Random();
 
             game.Window.TextInput += TextInputHandler;
-            var ship = new Sprites.Ship(shipTexture, shipPosition)
-            {
-
-            };
+            var ship = new Sprites.Ship(shipTexture, shipPosition);
         }
 
         public override void LoadContent()
@@ -57,6 +55,11 @@ namespace Word_Game.States
             shipTexture = _content.Load<Texture2D>("Entity/spaceship placeholder");
             shipPosition = new Vector2(screenWidth / 2, screenHeight);
             _font = _content.Load<SpriteFont>("Font/Arial");
+
+            healthBox = new Texture2D(_graphicsDevice, 50, 30);
+            Color[] data = new Color[50 * 30];
+            for (int i = 0; i < data.Length; ++i) data[i] = Color.Red;
+            healthBox.SetData(data);
 
             scrolling1 = new Scrolling(_content.Load<Texture2D>("Entity/SpaceBackground"), new Rectangle(0, 0, 600, 750));
             scrolling2 = new Scrolling(_content.Load<Texture2D>("Entity/SpaceBackground2"), new Rectangle(0, -600, 600, 750));
@@ -69,7 +72,7 @@ namespace Word_Game.States
                 _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
 
             if (healthCount == 0)
-                _game.ChangeState(new MenuState(_game, _graphicsDevice, _content));
+                _game.ChangeState(new HighScoreBoard(_game, _graphicsDevice, _content));
 
             if (scrolling1.rectangle.Y - scrolling1.texture.Height >= -200)
 
@@ -98,6 +101,7 @@ namespace Word_Game.States
                 {
                     enemy.isShot = true;
                     enemy.isVisable = false;
+                    currentString = "";
                     score += enemy.target.Length;
                 }
                 _Textbox.Clear();
@@ -108,7 +112,7 @@ namespace Word_Game.States
                 _Textbox.Append(toUpdate);
                 toUpdate = null;
                 currentString = _Textbox.ToString();
-    }
+            }
             oldKey = newKey;
 
             spawn += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -157,9 +161,7 @@ namespace Word_Game.States
             var character = args.Character;
 
             if (new Regex(@"[a-zA-Z ]").IsMatch(character.ToString()))
-            {
                 toUpdate = character.ToString();
-            }
         }
 
         public override void PostUpdate(GameTime gameTme)
@@ -173,10 +175,15 @@ namespace Word_Game.States
             scrolling1.Draw(spriteBatch);
             scrolling2.Draw(spriteBatch);
             spriteBatch.Draw(shipTexture, shipPosition, null, Color.White, 0f, new Vector2(shipTexture.Width / 2, shipTexture.Height), Vector2.One, SpriteEffects.None, 0f);
+            
             foreach (Sprites.Enemies enemy in enemy)
                 enemy.Draw(spriteBatch);
-            spriteBatch.DrawString(_font, _Textbox, new Vector2(0, screenHeight - shipTexture.Height), Color.Red);
-            spriteBatch.DrawString(_font, score.ToString(), new Vector2(0, screenHeight - (shipTexture.Height/2)), Color.Purple);
+            spriteBatch.DrawString(_font, _Textbox, new Vector2(10, screenHeight - (shipTexture.Height -40)), Color.Red);
+            spriteBatch.DrawString(_font, score.ToString(), new Vector2(10, screenHeight - (shipTexture.Height/2)), Color.Purple);
+            for (int i = 0; i < healthCount; i++)
+            {
+                spriteBatch.Draw(healthBox, new Vector2(50 + (i * 100), screenHeight - shipTexture.Height), Color.Red);
+            }
             spriteBatch.End();
         }
     }
