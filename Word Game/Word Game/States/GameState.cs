@@ -18,7 +18,6 @@ namespace Word_Game.States
         private string toUpdate, targetWord;
         private float spawn = 0;
         private float timer = 0;
-        private int score = 0;
         private int totalspawn = 1;
         private Texture2D shipTexture;
         private Texture2D healthBox;
@@ -30,6 +29,7 @@ namespace Word_Game.States
         public static string currentString = "";
         public static int screenWidth = 600;
         public static int screenHeight = 720;
+        public static int score = 0;
         public int healthCount = 3;
 
         public static List<string> targetList1 = new List<string>() { "Hello World", "Hi Orb", "Sup Earth", "Howdy Dirt", "Greetings Earthling"};
@@ -75,7 +75,6 @@ namespace Word_Game.States
                 _game.ChangeState(new HighScoreBoard(_game, _graphicsDevice, _content));
 
             if (scrolling1.rectangle.Y - scrolling1.texture.Height >= -200)
-
                 scrolling1.rectangle.Y = scrolling2.rectangle.Y - scrolling2.texture.Height;
             if (scrolling2.rectangle.Y - scrolling2.texture.Height >= -200)
                 scrolling2.rectangle.Y = scrolling1.rectangle.Y - scrolling1.texture.Height;

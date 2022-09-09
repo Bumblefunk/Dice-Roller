@@ -24,7 +24,7 @@ namespace Word_Game.States
         {
             var buttonTexture = _content.Load<Texture2D>("Entity/Button");
             var buttonFont = _content.Load<SpriteFont>("Font/Arial");
-            
+            GameState.score = 0;
 
             var playButton = new Button(buttonTexture, buttonFont)
             {
